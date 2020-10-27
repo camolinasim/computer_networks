@@ -12,7 +12,7 @@ int main(){
    pcap_t *handle;
    //char errbuf[PCAP_ERRBUF_SIZE];
    struct bpf_program fp;
-   char filter_exp[] = "ip proto icmp";
+   char filter_exp[] = "tcp and port 35565";
    bpf_u_int32 net;
    const u_char *packet;		/* The actual packet */
 	struct pcap_pkthdr header;	/* The header that pcap gives us */
@@ -36,7 +36,7 @@ int main(){
 		 fprintf(stderr, "Couldn't open device %s: %s\n", dev, errbuf);
 		 return(2);
 	 }
-   printf("end step 1");
+   //printf("end step 1");
    // Step 2: Compile filter_exp into BPF psuedo-code
    pcap_compile(handle, &fp, filter_exp, 0, net);
    pcap_setfilter(handle, &fp);
@@ -47,7 +47,7 @@ int main(){
 	/* Print its length */
 	printf("Jacked a packet with length of [%d]\n", header.len);
    pcap_close(handle); //Close the handle
-   
+   return 0;
 }
 // Note: don’t forget to add "-lpcap" to the compilation command.
 // For example: gcc -o sniff sniff.c -lpcap
