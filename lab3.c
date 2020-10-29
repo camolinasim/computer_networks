@@ -120,25 +120,25 @@ got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *packet)
 	}
 
 	/* print source and destination IP addresses */
-	printf("       Source: %s\n", inet_ntoa(ip->ip_src));
-	printf("       Destination: %s\n", inet_ntoa(ip->ip_dst));
+	printf("        Source: %s\n", inet_ntoa(ip->ip_src));
+	printf("        Destination: %s\n", inet_ntoa(ip->ip_dst));
 	
 	/* determine protocol */	
 	switch(ip->ip_p) {
 		case IPPROTO_TCP:
-			printf("   Protocol: TCP\n");
+			printf("\tProtocol: TCP\n");
 			break;
 		case IPPROTO_UDP:
-			printf("   Protocol: UDP\n");
+			printf("\tProtocol: UDP\n");
 			return;
 		case IPPROTO_ICMP:
-			printf("   Protocol: ICMP\n");
+			printf("\tProtocol: ICMP\n");
 			return;
 		case IPPROTO_IP:
-			printf("   Protocol: IP\n");
+			printf("\tProtocol: IP\n");
 			return;
 		default:
-			printf("   Protocol: unknown\n");
+			printf("\tProtocol: unknown\n");
 			return;
 	}
 	
@@ -154,8 +154,8 @@ got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *packet)
 		return;
 	}
 	
-	printf("   Src port: %d\n", ntohs(tcp->th_sport));
-	printf("   Dst port: %d\n", ntohs(tcp->th_dport));
+	//printf("   Src port: %d\n", ntohs(tcp->th_sport));
+	//printf("   Dst port: %d\n", ntohs(tcp->th_dport));
 	
 	/* define/compute tcp payload (segment) offset */
 	payload = (u_char *)(packet + SIZE_ETHERNET + size_ip + size_tcp);
@@ -168,7 +168,7 @@ got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *packet)
 	 * treat it as a string.
 	 */
 	if (size_payload > 0) {
-		printf("   Payload (%d bytes):\n If you're reading this you need to add the print_payload function", size_payload);
+		//printf("   Payload (%d bytes):\n If you're reading this you need to add the print_payload function", size_payload);
 		//print_payload(payload, size_payload);
 	}
 
