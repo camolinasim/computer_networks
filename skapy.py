@@ -2,5 +2,5 @@
 from scapy.all import *
 import sys
 
-filters = sys.argv[1]
-sniff(iface='ens33', count=5, filter=str(filters), prn=lambda x: x.summary())
+
+sniff(iface=sys.argv[1], count=100, filter=sys.argv[2], prn=lambda x: x.summary())

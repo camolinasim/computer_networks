@@ -300,7 +300,7 @@ int main(int argc, char **argv)
 		strcpy(filter_exp, argv[2]);
 	}
 	else if (argc > 3) {
-		fprintf(stderr, "error: unrecognized command-line options\n\n");
+		fprintf(stderr, "Too many arguments. Please run program like this: ./sudo snoff <device name> <filter_expression>\n\n");
 		//print_app_usage();
 		exit(EXIT_FAILURE);
 	}
@@ -354,7 +354,7 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 
-	free(filter_exp);
+	//free(filter_exp);
 
 	/* now we can set our callback function */
 	pcap_loop(handle, num_packets, got_packet, NULL);
