@@ -285,7 +285,7 @@ int main(int argc, char **argv)
 	char errbuf[PCAP_ERRBUF_SIZE];		/* error buffer */
 	pcap_t *handle;				/* packet capture handle */
 
-	char filter_exp[] = "tcp and port 23";		/* filter expression [3] */
+	char *filter_exp = malloc(256);		/* filter expression [3] */
 	struct bpf_program fp;			/* compiled filter program (expression) */
 	bpf_u_int32 mask;			/* subnet mask */
 	bpf_u_int32 net;			/* ip */
@@ -295,7 +295,11 @@ int main(int argc, char **argv)
 	if (argc == 2) {
 		dev = argv[1];
 	}
-	else if (argc > 2) {
+	if (argc == 3) {
+		dev = argv[1];
+		strcpy(filter_exp, argv[2]);
+	}
+	else if (argc > 3) {
 		fprintf(stderr, "error: unrecognized command-line options\n\n");
 		//print_app_usage();
 		exit(EXIT_FAILURE);
@@ -349,6 +353,8 @@ int main(int argc, char **argv)
 		    filter_exp, pcap_geterr(handle));
 		exit(EXIT_FAILURE);
 	}
+
+	free(filter_exp);
 
 	/* now we can set our callback function */
 	pcap_loop(handle, num_packets, got_packet, NULL);
